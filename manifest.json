@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Multi Site Switcher",
+  "version": "0.1.0",
+  "description": "一键在多个网站间快速切换账号（多站点适配 + 本地账号管理 + Popup 快速切换）",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_title": "Multi Site Switcher",
+    "default_popup": "src/popup/index.html"
+  },
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  }
+}

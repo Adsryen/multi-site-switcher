@@ -1,0 +1,20 @@
+:root{ --bg:#0b0f19; --card:#121826; --muted:#9aa4b2; --fg:#e5e7eb; --accent:#4f46e5; }
+*{ box-sizing:border-box; }
+html,body{ margin:0; padding:0; }
+body{ width:360px; background:var(--bg); color:var(--fg); font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+.container{ padding:12px; }
+header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+header h1{ font-size:16px; margin:0; }
+header a{ color:var(--muted); text-decoration:none; }
+section{ background:var(--card); padding:8px; border-radius:8px; margin-bottom:8px; }
+label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+select, input[type=text], input[type=password]{ width:100%; padding:8px; border-radius:6px; border:1px solid #2b3242; background:#0f1523; color:var(--fg); outline:none; }
+.accounts-header{ display:flex; align-items:center; justify-content:space-between; }
+.accounts-list{ list-style:none; padding:0; margin:8px 0 0; max-height:220px; overflow:auto; }
+.account-item{ display:flex; align-items:center; justify-content:space-between; padding:8px; border:1px solid #20283a; border-radius:6px; margin-bottom:6px; }
+.account-item.active{ border-color:var(--accent); }
+.account-item .actions button{ margin-left:6px; }
+button{ cursor:pointer; background:#1b2232; color:var(--fg); border:1px solid #2b3242; border-radius:6px; padding:6px 10px; }
+button:hover{ background:#222a3c; }
+.field{ margin-bottom:8px; }
+.actions{ display:flex; align-items:center; gap:6px; }

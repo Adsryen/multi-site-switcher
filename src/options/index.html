@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Multi Site Switcher · 设置</title>
+    <style>
+      :root{ --bg:#0b0f19; --card:#121826; --muted:#9aa4b2; --fg:#e5e7eb; }
+      *{ box-sizing:border-box; }
+      html,body{ margin:0; padding:0; }
+      body{ background:var(--bg); color:var(--fg); font:14px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; }
+      .container{ max-width:840px; margin:0 auto; padding:16px; }
+      header{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+      header h1{ font-size:18px; margin:0; }
+      section{ background:var(--card); padding:12px; border-radius:8px; margin-bottom:12px; }
+      label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; }
+      select{ width:100%; padding:8px; border-radius:6px; border:1px solid #2b3242; background:#0f1523; color:var(--fg); outline:none; }
+      .row{ display:flex; gap:12px; flex-wrap:wrap; }
+      .card{ flex:1 1 280px; background:#0f1523; border:1px solid #2b3242; border-radius:8px; padding:12px; }
+      .kv{ display:grid; grid-template-columns:120px 1fr; gap:8px; }
+      a.btn, button.btn{ display:inline-block; padding:8px 12px; border:1px solid #2b3242; border-radius:6px; color:var(--fg); background:#1b2232; text-decoration:none; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>扩展设置</h1>
+        <a class="btn" href="../popup/index.html" target="_blank">打开 Popup</a>
+      </header>
+
+      <section>
+        <label for="siteSelect">站点</label>
+        <select id="siteSelect"></select>
+      </section>
+
+      <div class="row">
+        <div class="card">
+          <h3>站点信息</h3>
+          <div class="kv">
+            <div>Key</div><div id="metaKey">-</div>
+            <div>名称</div><div id="metaName">-</div>
+            <div>登录页</div><div><a id="metaLogin" href="#" target="_blank">-</a></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>更多设置</h3>
+          <p>更多站点设置将逐步加入。</p>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>

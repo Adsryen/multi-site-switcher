@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Multi Site Switcher</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>切号器</h1>
+        <a id="openOptions" href="#">设置</a>
+      </header>
+
+      <section class="site">
+        <label for="siteSelect">站点</label>
+        <select id="siteSelect"></select>
+      </section>
+
+      <section class="accounts">
+        <div class="accounts-header">
+          <h2>账号</h2>
+          <button id="refreshAccounts" title="刷新">刷新</button>
+        </div>
+        <ul id="accountsList" class="accounts-list"></ul>
+      </section>
+
+      <section class="add">
+        <h3>新增/编辑账号</h3>
+        <form id="addAccountForm">
+          <input type="hidden" id="accountId" />
+          <div class="field">
+            <label>用户名</label>
+            <input id="username" type="text" required placeholder="username" />
+          </div>
+          <div class="field">
+            <label>密码（可选）</label>
+            <input id="password" type="password" placeholder="password" />
+          </div>
+          <div class="actions">
+            <button type="submit">保存</button>
+            <button id="resetForm" type="button">清空</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
