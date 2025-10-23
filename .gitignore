@@ -35,3 +35,6 @@ Thumbs.db
 # Misc
 *.tmp
 *.bak
+
+# windsurf
+.windsurf/
