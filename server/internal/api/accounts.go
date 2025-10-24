@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/chi/v5"
 
 	"mss/internal/store"
+	"mss/internal/validation"
 )
 
 type accountReq struct {
@@ -44,7 +45,13 @@ func (a *API) listAccounts(w http.ResponseWriter, r *http.Request) {
 	activeId, err := store.GetActiveAccountID(r.Context(), a.db, key)
 	if err != nil { fail(w, http.StatusInternalServerError, err); return }
 	res := make([]accountResp, 0, len(accs))
-	for _, it := range accs { res = append(res, toAccountResp(it)) }
+	for _, it := range accs {
+		ar := toAccountResp(it)
+		if ar.Props != nil {
+			if masked, err := validation.MaskSecretProps(r.Context(), a.db, key, ar.Props); err == nil { ar.Props = masked }
+		}
+		res = append(res, ar)
+	}
 	ok(w, map[string]interface{}{"accounts": res, "activeId": activeId})
 }
 
@@ -52,6 +59,9 @@ func (a *API) createAccount(w http.ResponseWriter, r *http.Request) {
 	key := chi.URLParam(r, "key")
 	var body accountReq
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil { fail(w, http.StatusBadRequest, err); return }
+	if body.Props != nil {
+		if err := validation.ValidateProps(r.Context(), a.db, key, body.Props); err != nil { fail(w, http.StatusBadRequest, err); return }
+	}
 	acc := store.Account{ ID: body.ID, SiteKey: key, Username: body.Username, Password: body.Password }
 	if acc.ID == "" { acc.ID = store.GenerateID("acc") }
 	if body.Props != nil {
@@ -59,7 +69,11 @@ func (a *API) createAccount(w http.ResponseWriter, r *http.Request) {
 		acc.Extra = string(b)
 	}
 	if err := store.CreateAccount(r.Context(), a.db, &acc); err != nil { fail(w, http.StatusInternalServerError, err); return }
-	ok(w, toAccountResp(acc))
+	resp := toAccountResp(acc)
+	if resp.Props != nil {
+		if masked, err := validation.MaskSecretProps(r.Context(), a.db, key, resp.Props); err == nil { resp.Props = masked }
+	}
+	ok(w, resp)
 }
 
 func (a *API) updateAccount(w http.ResponseWriter, r *http.Request) {
@@ -67,13 +81,20 @@ func (a *API) updateAccount(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "id")
 	var body accountReq
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil { fail(w, http.StatusBadRequest, err); return }
+	if body.Props != nil {
+		if err := validation.ValidateProps(r.Context(), a.db, key, body.Props); err != nil { fail(w, http.StatusBadRequest, err); return }
+	}
 	acc := store.Account{ ID: id, SiteKey: key, Username: body.Username, Password: body.Password }
 	if body.Props != nil {
 		b, _ := json.Marshal(body.Props)
 		acc.Extra = string(b)
 	}
 	if err := store.UpdateAccount(r.Context(), a.db, &acc); err != nil { fail(w, http.StatusInternalServerError, err); return }
-	ok(w, toAccountResp(acc))
+	resp := toAccountResp(acc)
+	if resp.Props != nil {
+		if masked, err := validation.MaskSecretProps(r.Context(), a.db, key, resp.Props); err == nil { resp.Props = masked }
+	}
+	ok(w, resp)
 }
 
 func (a *API) deleteAccount(w http.ResponseWriter, r *http.Request) {
