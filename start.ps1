@@ -2,7 +2,8 @@ param(
   [ValidateSet('local','docker')][string]$Mode = 'local',
   [int]$Port = 8080,
   [string]$DbPath = "$PSScriptRoot\data\mss.db",
-  [switch]$NoTidy
+  [switch]$NoTidy,
+  [switch]$AutoMigrate
 )
 
 $root = Split-Path -Parent $MyInvocation.MyCommand.Definition
@@ -11,6 +12,7 @@ if ($Mode -eq 'local') {
   $serverDir = Join-Path $root 'server'
   $env:MSS_LISTEN_ADDR = ":$Port"
   $env:MSS_DB_PATH = $DbPath
+  if ($AutoMigrate) { $env:MSS_AUTO_MIGRATE = '1' } else { $env:MSS_AUTO_MIGRATE = '0' }
   $dbDir = Split-Path -Parent $DbPath
   if (!(Test-Path $dbDir)) { New-Item -ItemType Directory -Path $dbDir | Out-Null }
   Push-Location $serverDir
