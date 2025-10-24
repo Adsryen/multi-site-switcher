@@ -1,0 +1,46 @@
+{{ define "sites" }}
+<section>
+  <h2>站点列表</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Name</th>
+        <th>Login URL</th>
+        <th>Created</th>
+        <th>Updated</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range .Sites }}
+      <tr>
+        <td>{{ .Key }}</td>
+        <td>{{ .Name }}</td>
+        <td>{{ .LoginURL }}</td>
+        <td>{{ .Created }}</td>
+        <td>{{ .Updated }}</td>
+      </tr>
+      {{ else }}
+      <tr><td colspan="5">暂无站点</td></tr>
+      {{ end }}
+    </tbody>
+  </table>
+
+  <h3>新增站点</h3>
+  <form method="post" action="/ui/sites">
+    <div class="row">
+      <label>Key</label>
+      <input type="text" name="key" placeholder="example" required />
+    </div>
+    <div class="row">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Example Site" required />
+    </div>
+    <div class="row">
+      <label>Login URL</label>
+      <input type="text" name="loginUrl" placeholder="https://example.com/login" />
+    </div>
+    <button type="submit">创建</button>
+  </form>
+</section>
+{{ end }}
