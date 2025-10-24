@@ -38,3 +38,9 @@ Thumbs.db
 
 # windsurf
 .windsurf/
+
+# data
+data/
+
+# executables
+*.exe
