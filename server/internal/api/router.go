@@ -40,6 +40,15 @@ func NewRouter(db *sqlx.DB) http.Handler {
 
 	r.Get("/sites", a.listSites)
 	r.Get("/sites/{key}", a.getSite)
+	r.Post("/sites", a.createSite)
+	r.Put("/sites/{key}", a.updateSite)
+	r.Delete("/sites/{key}", a.deleteSite)
+
+	// site field schemas
+	r.Get("/sites/{key}/schema", a.getSchema)
+	r.Post("/sites/{key}/schema", a.postSchema)
+	r.Put("/sites/{key}/schema/{field}", a.putSchema)
+	r.Delete("/sites/{key}/schema/{field}", a.deleteSchema)
 
 	r.Get("/sites/{key}/accounts", a.listAccounts)
 	r.Post("/sites/{key}/accounts", a.createAccount)
